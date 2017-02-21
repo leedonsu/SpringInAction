@@ -51,7 +51,7 @@ SpringJUnit4ClassRunner를 이용하면 테스트 시작 시 스프링 어플리
   
 ### 2.2.2 컴포넌트 스캔된 빈 명명하기
 스프링 애플리케이션 컨텍스트에서 모든 빈은 ID가 주어진다.  
-ID가 명시적으로 주어지지 않을 경우 클래스 명으로부터 유추되어 할당된다. (빈은 클래스 명의 첫 글자를 소문자로 바꾼 ID를 가진다.)  
+ID가 명시적으로 주어지지 않을 경우, *빈은 클래스 명의 첫 글자를 소문자로 바꾼 ID*를 가진다.  
 만약 빈에 다른 ID를 주고 싶다면 @Componet 애너테이션에 원하는 ID를 값으로 넣어주면 된다.
 
     @Component("lonelyHeartsClub")
@@ -60,3 +60,11 @@ ID가 명시적으로 주어지지 않을 경우 클래스 명으로부터 유�
 	}￼
   
 ### 2.2.3 컴포넌트 스캐닝을 위한 베이스 패키지 세팅
+@ComponentScan을 애트리뷰트 없이 사용할 경우, *컴포넌트 검색을 위한 베이스 패키지는 설정 클래스가 포함된 패키지로 간주된다.*  
+다른 베이스 패키지를 지정하고 싶은 경우 애트리뷰트를 추가한다.  
+
+    @ComponentScan(basePackages={"soundsystem", "video"})
+    
+type safe를 위해 패키지를 String 값으로 지정하지 않고, 패키지 내의 클래스나 인터페이스를 사용할 수 있다.
+
+    @ComponentScan(basePackageClasses={CDPlayer.class, DVDPlayer.class})

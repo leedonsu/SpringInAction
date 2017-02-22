@@ -87,3 +87,36 @@ type safe를 위해 패키지를 String 값으로 지정하지 않고, 패키지
 ### 2.2.5 자동 설정 검증하기  
 **[public class CDPlayerTest](https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/test/java/com.kakao/chapter2/CDPlayerTest.java)** 
   
+## 2.3 자바로 빈 와이어링하기  
+### 2.3.1 설정 클래스 만들기  
+자바 설정 클래스 만들기의 핵심은 @Configuration으로 애너테이트하는 것이다.  
+@Configuration 은 이를 설정 클래스로써 식별하고, 스프링 애플리케이션 컨텍스트에서 만들어진 빈의 자세한 내용이 포함될 수 있다는 것을 나타낸다.  
+  
+### 2.3.2 간단한 빈 선언하기  
+JavaConfig에서 빈을 선언하려면 원하는 타입의 인스턴스를 만드는 메소드를 만들고, @Bean으로 애너테이트 한다.  
+  
+    @Bean
+    public CompactDisc stgPeppers() {
+        return new SgtPeppers();
+    }
+  
+메소드는 궁극적으로 빈 인스턴스를 만드는 로직을 포함한다.  
+
+### 2.3.3 JavaConfig 주입하기  
+JavaConfig에서 빈을 와이어링하는 간단한 방법은 참조된 빈 메소드를 참조하는 것이다.  
+
+    @Bean
+    public CDPlayer cdPlayer() {
+        return new CDPlayer(sgtPeppers());
+    }
+    
+CompactDisc는 sgtPeppers를 호출해서 생성되는 것처럼 보이지만, 항상 그렇진 않다.  
+sgtPeppers() 메소드는 @Bean으로 애너테이트되므로 스프링은 콜을 중간에 인터셉트하고, 메소드에 의해 만들어진 빈은 다시 만들어지지 않고 이미 만들어진 것을 리턴해 주는 것을 보장한다.  
+
+메소드를 호출하여 빈을 참조하는 방법은 혼동될 수 있다.  
+  
+    @Bean
+    public CDPlayer cdPlayer(CompactDisc compactDisc) {
+        return new CDPlayer(compactDisc);
+    }
+    

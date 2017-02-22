@@ -73,7 +73,7 @@ type safe를 위해 패키지를 String 값으로 지정하지 않고, 패키지
 오토와이어링은 빈의 요구사항과 매칭되는 다른 빈을 찾아 빈 간의 의존성을 자동으로 만족시키도록 하는 수단이다.  
 오토 와이어링 수행을 하도록 지정하기 위해서는 @Authwired 애너테이션을 사용한다.  
   
-**[public class CDPlayer implements MediaPlayer(https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/CDPlayer.java)]**  
+**[public class CDPlayer implements MediaPlayer](https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/CDPlayer.java)**  
 생성자에 @Autowried가 걸려 있는데, 이는 스프링이 CDPlayer 빈을 생성할 때, 생성자를 통해 인스턴스화하고 CompactDisc에 대입 가능한 빈을 전달해 준다.  
   
 @Autowired 사용은 생성자로 한정되지 않는다.  

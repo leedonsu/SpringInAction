@@ -174,3 +174,22 @@ JavaConfig를 사용할 때처럼, SgtPeppers의 인스턴스를 직접 생성�
     <bean id="compactDisc" class="soundsystem.BlankDisc" c:_title="lalala" c:_artist="ellie" />
   
 **와이어링 컬렉션**  
+**(public class BlankDisc implements CompactDisc)[https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/BlankDisc2.java]**  
+생성자 인자로 리스트가 추가된 구현.  
+
+<list> 요소를 사용하여 리스트를 지정할 수 있다.
+    <bean id="compactDisc" class="soundsystem.BlankDisc">
+        <constructor-arg value="lalala" />
+        <constructor-arg value="ellie" />
+        <constructor-arg>
+			<list>
+				<value>lalala</value>
+				<value>yeyeye</value>
+				<value>hahaha</value>
+			</list>
+        </constructor-arg>
+    </bean>
+  
+이렇게 와이어링 컬렉션을 할 때는 <constructor-arg>가 c-네임스페이스보다 유리하다.  
+
+### 2.4.4 프로퍼티 세팅  

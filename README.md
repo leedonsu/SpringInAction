@@ -208,7 +208,7 @@ JavaConfig를 사용할 때처럼, SgtPeppers의 인스턴스를 직접 생성�
   
 p-네임스페이스를 사용하여 다음과 같이 compactDisc 프로퍼티를 와이어링할 수 있다.  
 
-    <bean id="cdPlayer" class="soundsystem.CDPlayer" p:compactDisc-ref="compactDisc" />
+    <bean id="cdPlayer" class="soundsystem.CDPlayer2" p:compactDisc-ref="compactDisc" />
 
 * p = p-네임스페이스 접두어
 * compactDisc = 프로퍼티 명
@@ -230,3 +230,39 @@ p-네임스페이스를 사용하여 다음과 같이 compactDisc 프로퍼티�
 			</list>
         </property>
     </bean>
+  
+p-네임스페이스를 이용하여 동일한 일을 수행할 수 있다.  
+  
+    <bean	id="compactDisc" 
+			class="soundsystem.BlankDisc3"
+			p:title="lalala"
+			p:artist="ellie">
+        <property name="tracks">
+			<list>
+				<value>lalala</value>
+				<value>yeyeye</value>
+				<value>hahaha</value>
+			</list>
+        </property>
+    </bean>
+  
+그러나 컬렉션을 와이어링할 때 p-네임스페티스를 사용할 수 없다.  
+
+하지만 스프링의 util-네임스페이스를 사용할 수 있다.  
+util-네임스페이스가 제공하는 것 중 하나는 <util:list> 요소이며, 리스트 빈을 만든다.  
+
+    <util:list id="trackList">
+		<value>lalala</value>
+		<value>yeyeye</value>
+		<value>hahaha</value>
+	</util:list>
+  
+이제 트랙 리스트 빈을 BlankDisc 빈의 트랙 프로퍼티로 와이어링한다.  
+
+    <bean	id="compactDisc" 
+			class="soundsystem.BlankDisc3"
+			p:title="lalala"
+			p:artist="ellie" 
+			p:tracks-ref="trackList" />
+  
+

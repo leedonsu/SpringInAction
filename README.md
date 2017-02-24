@@ -178,7 +178,7 @@ JavaConfig를 사용할 때처럼, SgtPeppers의 인스턴스를 직접 생성�
 생성자 인자로 리스트가 추가된 구현.  
 
 <list> 요소를 사용하여 리스트를 지정할 수 있다.
-    <bean id="compactDisc" class="soundsystem.BlankDisc">
+    <bean id="compactDisc" class="soundsystem.BlankDisc2">
         <constructor-arg value="lalala" />
         <constructor-arg value="ellie" />
         <constructor-arg>
@@ -193,3 +193,33 @@ JavaConfig를 사용할 때처럼, SgtPeppers의 인스턴스를 직접 생성�
 이렇게 와이어링 컬렉션을 할 때는 <constructor-arg>가 c-네임스페이스보다 유리하다.  
 
 ### 2.4.4 프로퍼티 세팅  
+**(public class BlankDisc implements CompactDisc)[https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/CDPlayer2.java]**  
+생성자 대신 setter로 compact disc를 주입받는 구현.  
+
+    <bean id="cdPlayer" class="soundsystem.CDPlayer2">
+        <property name="compactDisc" ref="compactDisc" />
+    </bean>
+  
+p-네임스페이스를 사용하여 다음과 같이 compactDisc 프로퍼티를 와이어링할 수 있다.  
+    <bean id="cdPlayer" class="soundsystem.CDPlayer" p:compactDisc-ref="compactDisc" />
+
+* p = p-네임스페이스 접두어
+* compactDisc = 프로퍼티 명
+* -ref = 빈 참조 주입
+* "compactDisc" = 주입할 빈의 ID
+  
+**리터럴 값을 사용하여 프로퍼티 주입하기**  
+**(public class BlankDisc implements CompactDisc)[https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/BlankDisc3.java]**  
+생성자 주입이 아닌 프로퍼티 주입을 받는 구현.  
+
+    <bean id="compactDisc" class="soundsystem.BlankDisc3">
+        <property name="title" value="lalala" />
+        <property name="artist" value="ellie" />
+        <property name="tracks">
+			<list>
+				<value>lalala</value>
+				<value>yeyeye</value>
+				<value>hahaha</value>
+			</list>
+        </property>
+    </bean>

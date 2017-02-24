@@ -125,3 +125,52 @@ cdPlayer() 메소드는 파라미터로 CompactDisc를 사용한다.
 이 방법으로 cdPlayer() 메소드는 CompactDisc의 @Bean 메소드를 명시적으로 참조하지 않고서도, CompactDisc를 CDPlayer 생성자에 주입한다.  
 
 ## 2.4 빈을 XML로 와이어링하기  
+### 2.4.1 XML 설정 스펙 만들기    
+가장 간단한 스프링 XML 설정은 다음과 같다.  
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+    	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+    	xsi:schemaLocation="http://www.springframework.org/schema/beans
+               				http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+               				http://www.springframework.org/schema/context">
+    </beans>
+  
+### 2.4.2 간단한 빈 선언  
+빈을 선언하기 위해서 <bean> 요소를 사용한다. <bean> 요소는 JavaConfig의 @Bean 애너테이션과 유사한 XML이다.  
+
+    <bean id="compactDisc" class="soundsystem.SgtPeppers"/>
+  
+JavaConfig를 사용할 때처럼, SgtPeppers의 인스턴스를 직접 생성할 필요가 없다. 스프링이 <bean> 요소를 발견하면, 기본 생성자를 호출하여 SgtPeppers 빈을 만든다.  
+  
+### 2.4.3 생성자 주입을 사용하여 빈 초기화하기  
+**빈 레퍼런스를 사용한 생성자 주입**  
+    <bean id="cdPlayer" class="soundsystem.CDPlayer">
+        <constructor-arg ref="compactDisc" />
+    </bean>
+<constructor-arg> 요소는 ID가 compactDisc인 빈에 대한 레퍼런스를 CDPlayer 생성자로 전달한다.  
+  
+다른 대안으로 스프링의 c-네임스페이스를 사용한다.  
+    <bean id="cdPlayer" class="soundsystem.CDPlayer" c:cd-ref="compactDisc"/>
+* c = c-네임스페이스 접두어
+* cd = 생성자 인자명
+* -ref = 빈 레퍼런스 주입
+* "compactDisc" : 주입용 빈 ID
+  
+단, 이름으로 파라미터를 참조하는 것은 컴파일 시 클래스코드에 디버그 심벌을 저장해야 한다. 대신에 파라미터 리스트에서 파라미터 위치를 가리키는 방법도 있다.  
+    <bean id="cdPlayer" class="soundsystem.CDPlayer" c:_0-ref="compactDisc"/>
+  
+
+**리터럴 값을 생성자에 주입하기**  
+객체가 아닌 리터럴 값만을 객체에 설정할 필요가 있을 때도 있다.  
+**(public class BlankDisc implements CompactDisc)[https://github.com/leedonsu/SpringInAction/blob/chapter2/ellie/src/main/java/com/kakao/module/chapter2/BlankDisc.java]**  
+생성자 인자로 리터럴 값을 받는 구현.  
+  
+    <bean id="compactDisc" class="soundsystem.BlankDisc">
+        <constructor-arg value="lalala" />
+        <constructor-arg value="ellie" />
+    </bean>
+  
+    <bean id="compactDisc" class="soundsystem.BlankDisc" c:_title="lalala" c:_artist="ellie" />
+  
+**와이어링 컬렉션**  

@@ -1,6 +1,7 @@
 package com.kakao;
 
 import com.kakao.module.bean.domain.Book;
+import com.kakao.module.bean.domain.Car;
 import com.kakao.module.bean.domain.Phone;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +21,15 @@ public class Application {
         Phone phone = app.getBean(Phone.class);
         Phone phone2 = app.getBean(Phone.class);
 
+
         log.info("book1 name : " + book.toString());
         log.info("book2 name : " + book2.toString());
         log.info("phone1 name : " + phone.toString());
         log.info("phone2 name : " + phone2.toString());
+
+
+        Car car = app.getBean(Car.class);
+        log.info("car name : {}", car.getName());
 
     }
 }

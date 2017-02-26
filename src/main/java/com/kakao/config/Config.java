@@ -1,6 +1,7 @@
 package com.kakao.config;
 
 import com.kakao.module.bean.domain.Book;
+import com.kakao.module.bean.domain.Car;
 import com.kakao.module.bean.domain.Phone;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,6 +26,11 @@ public class Config {
     @Bean
     public Phone getPhone(){
         return new Phone();
+    }
+
+    @Bean
+    public Car getCar(){
+        return new Car("아우디", 20000);
     }
 
 }

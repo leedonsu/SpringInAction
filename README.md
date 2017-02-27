@@ -265,4 +265,22 @@ util-네임스페이스가 제공하는 것 중 하나는 <util:list> 요소이�
 			p:artist="ellie" 
 			p:tracks-ref="trackList" />
   
+## 2.5 설정 가져오기와 믹싱하기  
+### 2.5.1 JavaConfig로 XML 설정 참조하기  
+다른 JavaConfig를 가져오기 위해선 @Import를 사용하고, XML 설정을 가져오기 위해선 @ImportResource를 사용한다.  
 
+    @Configuration
+	@Import(CDPlyaerConfig.class)
+	@ImportResource("classpaht:cd-config.xml")
+	public class SoundSystemConfig {
+	}
+  
+### 2.5.2 XML 설정에서 JavaConfig 참조하기  
+다른 XML 설정을 가져오기 위해선 <import> 요소를 사용하고, JavaConfig를 가져오기 위해선 <bean> 요소를 사용하면 된다.  
+
+    <beans>
+		<bean class="soundsystem.CDConfig" />
+
+		<import resource="cdplayer-config.xml" />
+    </beans>
+  

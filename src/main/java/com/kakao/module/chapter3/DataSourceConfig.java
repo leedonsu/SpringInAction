@@ -1,6 +1,7 @@
 package com.kakao.module.chapter3;
 
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,4 +37,19 @@ public class DataSourceConfig {
         jndiObjectFactoryBean.setProxyInterface(javax.sql.DataSource.class);
         return (DataSource) jndiObjectFactoryBean.getObject();
     }
+
+    /*
+    @Bean
+    @Profile("QA")
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl("jdbc:h2:tcp://dbserver/~/test");
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUsername("sa");
+        dataSource.setPassword("password");
+        dataSource.setInitialSize(20);
+        dataSource.setMaxActive(30);
+        return dataSource;
+    }
+    */
 }

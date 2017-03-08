@@ -10,20 +10,28 @@
                           http://www.springframework.org/schema/jdbc
                           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
                           http://www.springframework.org/schema/beans
-                          http://www.springframework.org/schema/beans/spring-beans.xsd">
+                          http://www.springframework.org/schema/beans/spring-beans.xsd" profile="dev">
 
     <beans profile="dev">
-        <jdbc:embedded-database id="dataSourceDev" type="H2">
+        <jdbc:embedded-database id="dataSource" type="H2">
             <jdbc:script location="classpath:resource/schema.sql" />
             <jdbc:script location="classpath:resource/test-data.sql" />
         </jdbc:embedded-database>
     </beans>
 
     <beans profile="prod">
-        <jee:jndi-lookup id="dataSourceProd"
+        <jee:jndi-lookup id="dataSource"
                          lazy-init="true"
                          jndi-name="jdbc/myDatabase"
                          resource-ref="true"
                          proxy-interface="javax.sql.DataSource" />
+    </beans>
+
+    <beans profile="qa">
+        <jee:jndi-lookup id="dataSource"
+                         jndi-name="jdbc/myDatabase"
+                         resource-ref="true"
+                         proxy-interface="javax.sql.DataSource" />
+
     </beans>
 </beans>

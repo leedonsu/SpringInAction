@@ -14,8 +14,9 @@ public class MagicExistsCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Environment env = context.getEnvironment();
-        return env.containsProperty("magic");
+        //Environment env = context.getEnvironment();
+        //return env.containsProperty("magic");
+        return true;
     }
 
 }

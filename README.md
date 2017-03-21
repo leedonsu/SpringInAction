@@ -12,7 +12,7 @@
   여기서는 데이터베이스를 예로 들고 있습니다.  
   
  
-개발 환경에서는 로컬에 있는 데이터베이스를 사용한다.
+개발 환경에서는 로컬에 있는 데이터베이스를 사용하도록 설정한다.
 
 
     @Bean(destroyMethod = "shutdown")
@@ -23,7 +23,7 @@
                 .addScript("classpath:test-data.sql")       // 테스트 데이터
                 .build();
     }    
-    
+    // H2는 Database
     
 실서비스 환경에서는 따로 구성된 데이터베이스를 사용한다.
 
@@ -35,7 +35,7 @@
         jndiObjectFactoryBean.setProxyInterface(javax.sql.DataSource.class);
         return (DataSource) jndiObjectFactoryBean.getObject();
     }
-    
+    // JNDI를 이용하여 DataSource 빈 구성 
     
 QA 테스트 환경에서는 원격지에 있는 데이터베이스를 사용할 수 있다.
 
@@ -50,6 +50,7 @@ QA 테스트 환경에서는 원격지에 있는 데이터베이스를 사용할
         dataSource.setMaxActive(30);
         return dataSource;
     }
+    // QA환경에선 외부에 설치된 DB를 구성하여 DB풀을 구성
     
 환경에 따라 데이터베이스 접근 방법이 모두 다르다.  
 환경에 따라 적절한 빈을 선택하도록 하는 방법이 프로파일을 설정하는 방법이다.  
@@ -82,11 +83,15 @@ bean id가 동일한 상태여도 프로파일에 따라 1개의 빈만 생성�
 * JVM 시스템 프로퍼티
 * 통합 테스트 클래스에서 @ActiveProfiles 애너테이션 사용
 
-[DispatcherServlet에 초기화된 파라미터](https://github.com/leedonsu/SpringInAction/blob/chapter3/paul/web/WEB-INF/web.xml)
+[DispatcherServlet에 초기화된 파라미터](https://github.com/leedonsu/SpringInAction/blob/chapter3/paul/src/main/java/resource/web.xml)
 이렇게 지정하면 개발에 참여한 개발자들이 추가 설정 없이 개발환경(dev)으로 적용해서 사용 할 수 있다.
 
 (spring.profile.active와 spring.profile.defalut에 대해 차이를 잘 모르겠음)   
 (active는 무조건 bean을 생성하고 default는 조건부로 빈을 생성한다는건지..)
+  
+JVM 시스템 프로퍼티:  
+
+    -Dspring.profiles.active=dev
 
 스프링은 테스트를 실행할 때 활성화될 필요가 있는 프로파일을 지정할 수 있도록 @ActiveProfiles 애너테이션을 제공한다.
 
@@ -103,7 +108,7 @@ bean id가 동일한 상태여도 프로파일에 따라 1개의 빈만 생성�
 
     @Bean
     @Conditional(MagicExistsCondition.class)
-    public MagicBean magicBead() {
+    public MagicBean magicBean() {
         return new MagicBean();
     }
 

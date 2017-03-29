@@ -1,5 +1,6 @@
 package com.kakao.concert;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 
 /**
@@ -9,25 +10,18 @@ import org.aspectj.lang.annotation.*;
 public class Audience {
 
     @Pointcut("execution(* com.kakao.concert.Performance.perform(..))")
-    public void performance(){}
-
-    @Before("performance()")
-    public void silenceCellPhones() {
-        System.out.println("폰 끄삼!");
+    public void performance() {
     }
 
-    @Before("performance()")
-    public void takeSeats() {
-        System.out.println("착석!");
-    }
-
-    @AfterReturning("performance()")
-    public void applause() {
-        System.out.println("짝! 짝! 짝!");
-    }
-
-    @AfterThrowing("performance()")
-    public void demandRefund() {
-        System.out.println("환불..ㅠㅜ");
+    @Around("performance()")
+    public void watchPerformance(ProceedingJoinPoint jp) {
+        try {
+            System.out.println("폰 끄삼!");
+            System.out.println("착석!");
+            jp.proceed();
+            System.out.println("짝! 짝! 짝!");
+        } catch (Throwable e) {
+            System.out.println("환불..ㅠㅜ");
+        }
     }
 }

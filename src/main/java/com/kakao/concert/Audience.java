@@ -1,9 +1,6 @@
 package com.kakao.concert;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 
 /**
  * Created by kakao on 2017. 3. 29..
@@ -11,22 +8,25 @@ import org.aspectj.lang.annotation.Before;
 @Aspect
 public class Audience {
 
-    @Before("execution(** com.kakao.concert.Performance.perform(..))")
+    @Pointcut("execution(* com.kakao.concert.Performance.perform(..))")
+    public void performance(){}
+
+    @Before("performance()")
     public void silenceCellPhones() {
         System.out.println("폰 끄삼!");
     }
 
-    @Before("execution(** com.kakao.concert.Performance.perform(..))")
+    @Before("performance()")
     public void takeSeats() {
         System.out.println("착석!");
     }
 
-    @AfterReturning("execution(** com.kakao.concert.Performance.perform(..))")
+    @AfterReturning("performance()")
     public void applause() {
         System.out.println("짝! 짝! 짝!");
     }
 
-    @AfterThrowing("execution(** com.kakao.concert.Performance.perform(..))")
+    @AfterThrowing("performance()")
     public void demandRefund() {
         System.out.println("환불..ㅠㅜ");
     }

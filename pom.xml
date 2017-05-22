@@ -14,6 +14,14 @@
         <version>1.5.1.RELEASE</version>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>daum</id>
+            <name>Daum Repository</name>
+            <url>http://maven.daumcorp.com/content/repositories/daum</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -23,6 +31,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.daum.tenth2</groupId>
+            <artifactId>tenth2-lib</artifactId>
+            <version>0.77</version>
         </dependency>
     </dependencies>
 
